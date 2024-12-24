@@ -1,6 +1,4 @@
-Here's a simple README template for your weather monitoring project using Python, Flask, SQLite, and React:
 
----
 
 # Weather Monitoring System
 
@@ -100,6 +98,3 @@ The backend calculates daily weather summaries (average, max, min temperatures) 
 ## Email Alerts
 
 Email alerts are sent if the temperature exceeds 35°C for two consecutive updates. This is configured in the `send_email_alert` function.
-
-
----
