@@ -33,7 +33,7 @@ def save_to_db(city, date, temp, weather_condition, feels_like):
     conn.commit()
 
 # OpenWeatherMap API key
-API_KEY = '98ad2888dcc2b1b2ed59b5f27885f5c5'
+API_KEY = 'API_KEY'
 
 # List of cities
 CITIES = ["Delhi", "Mumbai", "Chennai", "Bangalore", "Kolkata", "Hyderabad"]
