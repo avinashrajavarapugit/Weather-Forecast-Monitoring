@@ -9,6 +9,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email import encoders
 import sqlite3
+import os
 
 # Initialize SQLite database
 conn = sqlite3.connect('weather_data.db')
