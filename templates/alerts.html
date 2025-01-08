@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Alerts</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/alerts">Alerts</a></li>
+            <li><a href="/about">About</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>Weather Alerts</h1>
+        <ul id="alert-list">
+            <!-- Alerts will be dynamically added here -->
+        </ul>
+    </div>
+    <script>
+        // Fetch alerts from the backend
+        async function fetchAlerts() {
+            const response = await fetch('/weather-data');
+            if (response.ok) {
+                const data = await response.json();
+                renderAlerts(data.data);
+            } else {
+                console.error('Failed to fetch alerts');
+            }
+        }
+
+        function renderAlerts(data) {
+            const alertList = document.getElementById('alert-list');
+            alertList.innerHTML = '';
+            data.forEach(item => {
+                if (item.temp > 35) {
+                    const li = document.createElement('li');
+                    li.textContent = `Alert: High temperature in ${item.city} - ${item.temp}°C`;
+                    alertList.appendChild(li);
+                }
+            });
+        }
+
+        fetchAlerts();
+    </script>
+</body>
+</html>
