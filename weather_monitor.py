@@ -5,7 +5,9 @@ import matplotlib.pyplot as plt
 from statistics import mean
 import smtplib
 from email.mime.text import MIMEText
-
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email import encoders
 import sqlite3
 
 # Initialize SQLite database
@@ -33,10 +35,9 @@ def save_to_db(city, date, temp, weather_condition, feels_like):
     conn.commit()
 
 # OpenWeatherMap API key
-API_KEY = 'API_KEY'
+API_KEY = '98ad2888dcc2b1b2ed59b5f27885f5c5'
 
 # List of cities
-CITIES = ["Delhi", "Mumbai", "Chennai", "Bangalore", "Kolkata", "Hyderabad"]
 
 # Function to convert Kelvin to Celsius
 def kelvin_to_celsius(kelvin_temp):
@@ -53,18 +54,24 @@ def get_weather_data(city):
 
 # Function to send alert via email
 def send_email_alert(subject, body):
-    sender_email = "your_email@gmail.com"
-    receiver_email = "receiver_email@gmail.com"
-    password = "your_email_password"
-    
-    msg = MIMEText(body)
-    msg['Subject'] = subject
+    sender_email = "21071a6249@vnrvjiet.in@gmail.com"
+    receiver_email = "rajavarapu.avinash@gmail.com"
+    password = "R.avi@6302833897"
+
+    msg = MIMEMultipart()
     msg['From'] = sender_email
     msg['To'] = receiver_email
-    
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
-        server.login(sender_email, password)
-        server.sendmail(sender_email, receiver_email, msg.as_string())
+    msg['Subject'] = subject
+
+    msg.attach(MIMEText(body, 'plain'))
+
+    try:
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
+            server.login(sender_email, password)
+            server.sendmail(sender_email, receiver_email, msg.as_string())
+        print("Alert email sent successfully!")
+    except Exception as e:
+        print(f"Failed to send email alert: {str(e)}")
 
 # Function to process and store daily weather summary
 def process_weather_data(city, data_store, alerts, data):
@@ -131,7 +138,7 @@ def visualize_data(data_store):
     plt.show()
 
 # Main function to run the system
-def run_weather_monitor(interval=60, duration=60):
+def run_weather_monitor(interval, duration, CITIES):
     data_store = {}
     alerts = {city: [] for city in CITIES}
     
@@ -147,4 +154,3 @@ def run_weather_monitor(interval=60, duration=60):
     visualize_data(data_store)
 
 # Run the system (interval of 5 minutes, for 24 hours)
-run_weather_monitor(interval=2, duration=60)
