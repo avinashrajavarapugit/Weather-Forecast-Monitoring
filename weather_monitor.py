@@ -35,7 +35,7 @@ def save_to_db(city, date, temp, weather_condition, feels_like):
     conn.commit()
 
 # OpenWeatherMap API key
-API_KEY = '98ad2888dcc2b1b2ed59b5f27885f5c5'
+API_KEY = os.getenv('OPENWEATHER_API_KEY')
 
 # List of cities
 
@@ -54,9 +54,9 @@ def get_weather_data(city):
 
 # Function to send alert via email
 def send_email_alert(subject, body):
-    sender_email = "21071a6249@vnrvjiet.in@gmail.com"
-    receiver_email = "rajavarapu.avinash@gmail.com"
-    password = "R.avi@6302833897"
+    sender_email = os.getenv('SMTP_EMAIL')
+    receiver_email = os.getenv('ALERT_RECEIVER_EMAIL')
+    password = os.getenv('SMTP_PASSWORD')
 
     msg = MIMEMultipart()
     msg['From'] = sender_email
